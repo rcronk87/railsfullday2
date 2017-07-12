@@ -38,6 +38,13 @@ class SightingsController < ApplicationController
   # POST /sightings.json
   def create
     @sighting = Sighting.new(sighting_params)
+    @animals_for_select = Animal.all.map do |animal|
+     [animal.name, animal.id]
+    end
+    # @sighting = Sighting.new(sighting_params)
+    @region4s_for_select = Region4.all.map do |region4|
+      [region4.name, region4.id]
+    end
 
     respond_to do |format|
       if @sighting.save
@@ -82,6 +89,6 @@ class SightingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sighting_params
-      params.require(:sighting).permit(:date, :time, :latitude, :longitude, :animal_id)
+      params.require(:sighting).permit(:date, :time, :latitude, :longitude, :animal_id, :region4_id)
     end
 end
